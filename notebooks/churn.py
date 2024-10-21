@@ -5,6 +5,10 @@ import numpy as np
 import pandas as pd
 import streamlit as st
 from openai import OpenAI
+import sys
+sys.path.append(
+    os.path.abspath("C:/Users/luisr/Desktop/headstarter/Customer-Churn-/utils")
+)
 import utils
 
 # Retrieve the API key from the environment variable
@@ -24,15 +28,15 @@ def load_model(filename):
 
 
 # Load models
-xgboost_model = load_model("model/xgb_model.pkl")
-dc_model = load_model("model/dc_model.pkl")
-nb_model = load_model("model/nb_model.pkl")
-rf_model = load_model("model/rf_model.pkl")
-voting_model = load_model("model/voting_clf.pkl")
-voting_hard_model = load_model("model/xgb_model.pkl")
-xgboost_feature = load_model("model/xgboost_feature_engineering.pkl")
-xgboost_smote = load_model("model/xgboost-SMOTE.pkl")
-kn_model = load_model("model/kn_model.pkl")
+xgboost_model = load_model("../models/xgb_model.pkl")
+dc_model = load_model("../models/dc_model.pkl")
+nb_model = load_model("../models/nb_model.pkl")
+rf_model = load_model("../models/rf_model.pkl")
+voting_model = load_model("../models/voting_clf.pkl")
+voting_hard_model = load_model("../models/xgb_model.pkl")
+xgboost_feature = load_model("../models/xgboost_feature_engineering.pkl")
+xgboost_smote = load_model("../models/xgboost-SMOTE.pkl")
+kn_model = load_model("../models/kn_model.pkl")
 
 
 # Prepare input data for prediction
@@ -162,7 +166,7 @@ def generate_email(probability, input_dict, explanation, surname):
 
 # Streamlit app setup
 st.title("Customer Churn Prediction")
-df = pd.read_csv("data/churn.csv")
+df = pd.read_csv("../data/churn.csv")
 
 customers = [f"{row['CustomerId']} - {row['Surname']}" for _, row in df.iterrows()]
 selected_customer_option = st.selectbox("Select a customer", customers)
