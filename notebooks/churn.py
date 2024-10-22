@@ -100,7 +100,7 @@ def make_predictions(input_df, input_dict):
 # Explain predictions using the OpenAI client
 def explain_predictions(probability, input_dict, surname):
     prompt = f"""
-    You are an expert data scientist at a bank, where you specialize in interpreting and explaining predictions of machine learning models.
+    You are an expert data scientist at US Bank, where you specialize in interpreting and explaining predictions of machine learning models.
 
     Your machine learning model has predicted that a customer named {surname} has a {round(probability * 100, 1)}% probability of churning, based on the information provided below.
 
@@ -133,7 +133,7 @@ def explain_predictions(probability, input_dict, surname):
     - If the customer has less than a 40% risk of churning, generate a 3-sentence explanation why they are not at risk.
     - Your explanations should be based on the customer's information, the summary statistics of churned and non-churned customers, and the feature importances provided.
     
-    Don't mention the probability of churning, or the machine learning model, or say anything like "Based on the machine learning model's prediction and top 10 most important features", just explain the prediction
+    Don't mention the probability of churning, or the machine learning model, or say anything like "Based on the machine learning model's prediction and top 10 most important features", just explain the prediction. If you include numbers make sure they are rounded to the nearest hundredth. 
     """
 
     print("EXPLANATION PROMPT", prompt)
@@ -153,7 +153,7 @@ def generate_email(probability, input_dict, explanation, surname):
     
     Generate an email to the customer based on their information, asking them to stay if they are at risk of churning, or offering them incentives so that they become more loyal to the bank.
     
-    Make sure to list out a set of incentives to stay based on their information, in bullet point format. Don't ever mention the probability of churning, or the machine learning model to the customer.
+    Make sure to list out a set of incentives to stay based on the number of products they use, if they have a credit card, offer ask about saving goals based on the age group the fall into, in bullet point format. Don't ever mention the probability of churning, or the machine learning model to the customer.
     """
     raw_response = client.chat.completions.create(
         model="llama-3.2-3b-preview", messages=[{"role": "user", "content": prompt}]
